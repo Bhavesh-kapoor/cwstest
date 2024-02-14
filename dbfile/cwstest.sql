@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 13, 2024 at 06:00 PM
+-- Generation Time: Feb 14, 2024 at 07:27 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cws`
+-- Database: `cwstest`
 --
 
 -- --------------------------------------------------------
@@ -240,7 +240,7 @@ CREATE TABLE `sidebar_attrs` (
 --
 
 INSERT INTO `sidebar_attrs` (`id`, `sidebar_name`, `sidebar_slug`, `flag`, `created_at`, `updated_at`) VALUES
-(1, 'Registerations', 'registrations', 1, NULL, NULL);
+(1, 'Registrations', 'registrations', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -304,13 +304,6 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `title`, `first_name`, `last_name`, `phone`, `dob`, `gender`, `email`, `profile`, `resume`, `address`, `flag`, `created_at`, `updated_at`) VALUES
-(4, '', 'Bhavesh Kapoor', 'Kapoor', '8595529873', '2002-02-15', 'male', 'roshan@sootisyahi.com', '202402131652pngtree-the-green-switch-is-on-png-image_4461287.png', '202402131652orders (6).pdf', 'B Block 2 satya Vihar', '0', NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -332,7 +325,7 @@ CREATE TABLE `user_table` (
 --
 
 INSERT INTO `user_table` (`id`, `name`, `phone`, `email`, `password`, `genre`, `flag`) VALUES
-(181, 'CWS Machine Test- PHP Developer', '8595529873', 'admin@gmail.com', '$2y$10$aGM.2vYA6HHlBkiWIlbgJ.vLogNu9nQ8w2VhpLSjQZfIgBMizMDku', 'admin', 0);
+(181, 'CWS Machine Test- PHP Developer', '8595529873', 'admin@gmail.com', '$2y$10$XpFqxNpz4v6uNkql0rnnveRbXYmz7PFpJSy6M0nRsS3wYZNGBcsP6', 'admin', 0);
 
 -- --------------------------------------------------------
 
@@ -481,7 +474,7 @@ ALTER TABLE `staff`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user_table`
