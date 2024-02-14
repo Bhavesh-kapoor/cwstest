@@ -20,4 +20,7 @@ class User extends Model
     public static function getList(){
         return User::orderby('id','desc')->get();
     } 
+    public static function getuserdata($id){
+        return User::find($id);
+    } 
 }

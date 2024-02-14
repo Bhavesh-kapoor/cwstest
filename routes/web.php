@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth', 'prefix' => '/admin'], function () {
 
     Route::post('/registrations/delete', [RegistrationController::class, 'delete']);
     Route::resource('registrations', RegistrationController::class);
+    Route::get('registrations/view/{id}', [RegistrationController::class,'view']);
 
   
 

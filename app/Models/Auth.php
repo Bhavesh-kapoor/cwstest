@@ -14,7 +14,7 @@ class Auth extends Model
     public static function checkemail($email) {
         $check = Auth::where('email',$email)->first();
         return $check;
-    }x
+    }
 
     public  static function listwhere($id) {
         return Auth::where('id', $id)->first();    

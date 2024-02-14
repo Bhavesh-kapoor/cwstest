@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services;
 
@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Validation\Rule;
 
 use Illuminate\Support\Carbon;
 
@@ -16,7 +17,7 @@ use Illuminate\Support\Carbon;
 class RegistrationService
 {
 
-    
+    // Display a listing of the users.
     public static function index()
     {
         $data['users'] = User::getList();
@@ -24,11 +25,14 @@ class RegistrationService
     }
 
 
+    // Show the form for creating a new user.
     public static function create()
     {
         return view('admin.users.add');
     }
 
+
+    // Upload a file and return the file name.
     public static function uploadFile($file, $type)
     {
         $fileName = date('YmdHi') . $file->getClientOriginalName();
@@ -36,24 +40,12 @@ class RegistrationService
         return $fileName;
     }
 
-    public static function store( $request)
-    { 
-        $validate = Validator::make($request->all(), [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'phone' => 'required|min:10',
-            'email' => 'required|email|unique:users,email',
-            'dob' => 'required|date|before:' . Carbon::now()->subYears(18)->format('Y-m-d'),
-            'gender' => 'required',
-            'profile' => 'required|image|mimes:jpg,png|max:2048',
-            'resume' => 'required|mimes:pdf,docx|max:2048',
-            'address' => 'required',
+    // Store a newly created user in storage.
 
-        ], [
-            'dob.before' => 'DOB should be greater than 18 years',
-            'email.unique' => 'Email address already exists.'
+    public static function store($request)
+    {
+        $validate = Validator::make($request->all(), Self::validationRules($request));
 
-        ]);
 
         if ($validate->fails()) {
             return response()->json(['code' => 401, 'message' => $validate->errors()->toArray()]);
@@ -61,9 +53,9 @@ class RegistrationService
             if ($request->hasFile('profile')) {
                 $data['profile'] = Self::uploadFile($request->file('profile'), 'profile');
             }
-        
+
             if ($request->hasFile('resume')) {
-                $data['resume'] =Self::uploadFile($request->file('resume'), 'resume');
+                $data['resume'] = Self::uploadFile($request->file('resume'), 'resume');
             }
             $data['first_name'] = $request->input('first_name');
             $data['last_name'] = $request->input('last_name');
@@ -75,54 +67,61 @@ class RegistrationService
             $query =  User::insert($data);
 
             if ($query) {
-                return response()->json(['code'=>200,'message'=>'User added Successfully!']);
+                return response()->json(['code' => 200, 'message' => 'User added Successfully!']);
             } else {
-                return response()->json(['code'=>401,'message'=>'Something went wrong']);
+                return response()->json(['code' => 401, 'message' => 'Something went wrong']);
             }
         }
     }
 
-    public static function changepassworddiv($id, $table)
+    // Show the form for editing the specified user.
+    public static function edit($id)
     {
-        $data['id'] = $id;
-        $data['table'] = $table;
-        return view('admin/users/change_password', $data);
+        $data['edit'] = User::getuserdata($id);
+        return view('admin.users.edit', $data);
     }
 
 
 
-    public static function updatepassword(Request $request)
+    // Update the specified user in storage.
+    public static function update(Request $request)
     {
-        $validate = Validator::make($request->all(), [
-            'rowid' => 'required',
-            'table' => 'required',
-            'new_password' => 'required|min:6',
-            'confirm_password' => 'required|min:6',
-        ]);
+
+        $validate = Validator::make($request->all(), Self::validationRules($request, $request->user_id));
 
         if ($validate->fails()) {
             return response()->json(['code' => 401, 'message' => $validate->errors()->toArray()]);
         } else {
 
-            if ($request->new_password == $request->confirm_password) {
+            if ($request->hasFile('profile')) {
+                $data['profile'] = Self::uploadFile($request->file('profile'), 'profile');
+            }
 
-                $savedata['password'] = Hash::make($request->new_password);
-                $query = DB::table($request->table)->where('id', $request->rowid)->update($savedata);
+            if ($request->hasFile('resume')) {
+                $data['resume'] = Self::uploadFile($request->file('resume'), 'resume');
+            }
 
-                if ($query) {
-                    return response()->json(['code' => 200, 'message' => 'Password Changed Successfully']);
-                } else {
-                    return response()->json(['code' => 400, 'message' => 'Something went wrong']);
-                }
+            $data['first_name'] = $request->input('first_name');
+            $data['last_name'] = $request->input('last_name');
+            $data['phone'] = $request->input('phone');
+            $data['email'] = $request->input('email');
+            $data['dob'] = $request->input('dob');
+            $data['gender'] = $request->input('gender');
+            $data['address'] = $request->input('address');
+            $query =  User::where('id', $request->user_id)->update($data);
+
+            if ($query) {
+                return response()->json(['code' => 200, 'message' => 'User Updated Successfully!']);
             } else {
-                return response()->json(['code' => 400, 'message' => 'Password & Confirm Password must be same']);
+                return response()->json(['code' => 401, 'message' => 'Something went wrong']);
             }
         }
+
+        return $request->all();
     }
 
 
-
-
+// Remove the specified user from storage.
     public static function delete($request)
     {
 
@@ -138,11 +137,11 @@ class RegistrationService
 
             if ($request->type == 'delete') {
                 $key = 'Deleted';
-            } 
+            }
 
 
-             $query = DB::table($request->table)->where('id', $request->id)->delete();
-        
+            $query = DB::table($request->table)->where('id', $request->id)->delete();
+
 
             if ($query) {
                 return response()->json(['code' => 200, 'message' => 'Data ' . $key . ' Successfully']);
@@ -152,9 +151,40 @@ class RegistrationService
         }
     }
 
+
+    // Define validation rules for the user data.
+    public static function validationRules($request, $userId = null)
+    {
+        $rules = [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone' => 'required|min:10',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($userId),
+            ],
+            'dob' => 'required|date|before:' . Carbon::now()->subYears(18)->format('Y-m-d'),
+            'gender' => 'required',
+            'address' => 'required',
+        ];
+        if ($request->isMethod('post')) {
+            // Add rules for store operation
+            $rules['profile'] = 'required|image|mimes:jpg,jpeg,png|max:2048';
+            $rules['resume'] = 'required|mimes:pdf,docx|max:2048';
+        } else {
+            // Add rules for update operation
+            $rules['profile'] = 'sometimes|image|mimes:jpg,jpeg,png|max:2048';
+            $rules['resume'] = 'sometimes|mimes:pdf,docx|max:2048';
+        }
+
+        return $rules;
+    }
+
+
+    public function view($id){
+        $data['edit'] = User::getuserdata($id);
+        return view('admin.users.view', $data);
+
+    }
 }
-
-
-
-
-?>

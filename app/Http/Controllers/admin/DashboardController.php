@@ -13,12 +13,12 @@ class DashboardController extends Controller
 {
     // index function
     public static function index()  {
-        return view('admin/dashboard');
+        return view('admin.dashboard');
     }
 
 
     public static function change_password() {
-        return view('admin/change_password');
+        return view('admin.change_password');
     }
 
 
@@ -33,7 +33,7 @@ class DashboardController extends Controller
         if ($validate->fails()) {
             return response()->json(['code' => 401, 'message' => $validate->errors()->toArray()]);
         } else {
-             $exist = Common::getlistcommon('user_table','id',getlogindetail('id'));
+             $exist = DB::table('user_table')->where('id',getlogindetail('id'))->first();
 
             if(Hash::check($request->current_password, $exist->password)) {
 

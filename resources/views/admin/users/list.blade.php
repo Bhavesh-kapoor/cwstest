@@ -85,14 +85,23 @@
                             <td>
                               
 
-
                                 <div class="dropdown d-inline-block">
 
                                     <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="ri-more-fill align-middle"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
-
+                                        <li>
+                                            <a class="dropdown-item"  href="{{ url('admin/registrations/view/'.$list->id)}}">
+                                                <i class="ri-focus-2-line align-bottom me-2 text-muted"></i> View
+                                            </a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a class="dropdown-item"  href="{{ route('registrations.edit', $list->id) }}">
+                                                <i class="ri-edit-line align-bottom me-2 text-muted"></i> Edit
+                                            </a>
+                                        </li>
                                         <li>
                                             <a class="dropdown-item" data-bs-target="#deletepopup" data-bs-toggle="modal" onclick="deletepopup({{ $list->id }},'users','delete')" href="javascript:void(0);">
                                                 <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete

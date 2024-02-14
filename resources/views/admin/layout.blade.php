@@ -7,14 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
-    <link rel="shortcut icon" href="{{asset('admin/images/favicon.ico')}}">
-    <link href="{{asset('admin/libs/jsvectormap/css/jsvectormap.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('admin/libs/swiper/swiper-bundle.min.css')}}" rel="stylesheet" type="text/css" />
-    <script src="{{asset('admin/js/layout.js')}}"></script>
-    <link href="{{asset('admin/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('admin/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('admin/css/app.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('admin/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
+    <script src="{{ URL::asset('admin/js/layout.js')}}"></script>
+    <link href="{{ URL::asset('admin/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/css/app.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('admin/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
@@ -42,26 +39,7 @@
                 <div class="navbar-header">
                     <div class="d-flex">
                         <!-- LOGO -->
-                        <div class="navbar-brand-box horizontal-logo">
-                            <a href="{{url('/admin/dashboard')}}" class="logo logo-dark">
-                                <span class="logo-sm">
-                                    Logo <img src="{{asset('admin/images/logo-sm.png')}}" alt="" height="22">
-                                </span>
-                                <span class="logo-lg">
-                                    Logo <img src="{{asset('admin/images/logo-dark.png')}}" alt="" height="17">
-                                </span>
-                            </a>
-
-                            <a href="{{url('/admin/dashboard')}}" class="logo logo-light">
-                                <span class="logo-sm">
-                                    Logo <img src="{{asset('admin/images/logo-sm.png')}}" alt="" height="22">
-                                </span>
-                                <span class="logo-lg">
-                                    Logo <img src="{{asset('admin/images/logo-light.png')}}" alt="" height="17">
-                                </span>
-                            </a>
-                        </div>
-
+                     
                         <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger" id="topnav-hamburger-icon">
                             <span class="hamburger-icon">
                                 <span></span>
@@ -75,7 +53,7 @@
                         <div class="dropdown ms-sm-3 header-item topbar-user">
                             <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="d-flex align-items-center">
-                                    <img class="rounded-circle header-profile-user" src="{{asset('admin/images/users/avatar-1.jpg')}}" alt="Header Avatar">
+                                    <img class="rounded-circle header-profile-user" src="{{ URL::asset('admin/images/users/avatar-1.jpg')}}" alt="Header Avatar">
                                     <span class="text-start ms-xl-2">
                                         <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text"> {{ ucfirst(getlogindetail('name')) }}</span>
                                         <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">{{ ucfirst(getlogindetail('role')) }}</span>
@@ -201,22 +179,22 @@
 
 
     <!-- JAVASCRIPT -->
-    <script src="{{asset('admin/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{asset('admin/libs/simplebar/simplebar.min.js')}}"></script>
-    <script src="{{asset('admin/libs/node-waves/waves.min.js')}}"></script>
-    <script src="{{asset('admin/libs/feather-icons/feather.min.js')}}"></script>
-    <script src="{{asset('admin/js/pages/plugins/lord-icon-2.1.0.js')}}"></script>
-    <script src="{{asset('admin/js/plugins.js')}}"></script>
-    <script src="{{asset('admin/libs/apexcharts/apexcharts.min.js')}}"></script>
-    <script src="{{asset('admin/libs/jsvectormap/js/jsvectormap.min.js')}}"></script>
-    <script src="{{asset('admin/libs/jsvectormap/maps/world-merc.js')}}"></script>
-    <script src="{{asset('admin/libs/swiper/swiper-bundle.min.js')}}"></script>
-    <script src="{{asset('admin/js/pages/dashboard-ecommerce.init.js')}}"></script>
-    <script src="{{asset('admin/js/app.js')}}"></script>
+    <script src="{{ URL::asset('admin/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ URL::asset('admin/libs/simplebar/simplebar.min.js')}}"></script>
+    <script src="{{ URL::asset('admin/libs/node-waves/waves.min.js')}}"></script>
+    <script src="{{ URL::asset('admin/libs/feather-icons/feather.min.js')}}"></script>
+    <script src="{{ URL::asset('admin/js/pages/plugins/lord-icon-2.1.0.js')}}"></script>
+    <script src="{{ URL::asset('admin/js/plugins.js')}}"></script>
+    <script src="{{ URL::asset('admin/libs/apexcharts/apexcharts.min.js')}}"></script>
+    <script src="{{ URL::asset('admin/libs/jsvectormap/js/jsvectormap.min.js')}}"></script>
+    <script src="{{ URL::asset('admin/libs/jsvectormap/maps/world-merc.js')}}"></script>
+    <script src="{{ URL::asset('admin/js/app.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+   
+     @stack('registrationajax')
 
 
-    <script src="{{asset('admin/js/custom.js')}}"></script>
+    <script src="{{ URL::asset('admin/js/custom.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     
 
